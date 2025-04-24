@@ -28,7 +28,15 @@
    - Expose Open WebUI using a Kubernetes Service.
    - See `openwebui-service.yaml` for the configuration.
 
+## Step 4: Set Up RBAC
 
+1. **Create a Role for Ollama:**
+   - Define a role for Ollama.
+   - See `ollama-role.yaml` for the configuration.
+
+2. **Create a RoleBinding for Ollama:**
+   - Bind the role to Ollama.
+   - See `ollama-rolebinding.yaml` for the configuration.
 
 ## Step 5: Deploy the Applications
 
@@ -41,4 +49,22 @@
   kubectl apply -f ollama-service.yaml
   kubectl apply -f openwebui-service.yaml
   kubectl apply -f rbac.yaml
-  ``` 
+  ```
+
+## Step 6: Install MetalLB
+
+1. **Deploy MetalLB**:
+   - Install MetalLB using the following command:
+     ```bash
+     kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.14.9/config/manifests/metallb-native.yaml
+     ```
+
+2. **Configure MetalLB**:
+   - After deploying MetalLB, apply the configuration to define the IP address range:
+     ```bash
+     kubectl apply -f metallb-config.yaml
+     ```
+
+### YAML Files Required:
+- **`metallb-native.yaml`**: Used to deploy MetalLB in your cluster.
+- **`metallb-config.yaml`**: Defines the IP address range for MetalLB to use. 
