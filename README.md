@@ -95,4 +95,9 @@
      ```
 
 **LiteLLM Summary**:
-LiteLLM is a proxy tool that allows integration of Azure-hosted AI models with local applications like Ollama WebUI. It translates Azure AI API requests into a format compatible with OpenAI-style requests, enabling seamless interaction between Azure models and local interfaces. This setup leverages both cloud-based AI services and local deployment capabilities, providing flexibility and scalability in AI model management. 
+LiteLLM is a proxy tool that allows integration of Azure-hosted AI models with local applications like Ollama WebUI. It translates Azure AI API requests into a format compatible with OpenAI-style requests, enabling seamless interaction between Azure models and local interfaces. This setup leverages both cloud-based AI services and local deployment capabilities, providing flexibility and scalability in AI model management.
+
+**Communication Summary**:
+- **Internal Communication**: Pods communicate using Kubernetes services, which provide DNS resolution and load balancing. The Open WebUI pod interacts with the Ollama pod for model management and with the LiteLLM Proxy for accessing Azure-hosted models.
+- **External Communication**: The LiteLLM Proxy requires external access to communicate with Azure AI services, facilitated by a LoadBalancer service using MetalLB. This allows external clients to access the proxy.
+- **LoadBalancer Service**: Ensures scalability and reliability by distributing requests across LiteLLM Proxy replicas and providing an external IP for access. 
