@@ -67,4 +67,32 @@
 
 ### YAML Files Required:
 - **`metallb-native.yaml`**: Used to deploy MetalLB in your cluster.
-- **`metallb-config.yaml`**: Defines the IP address range for MetalLB to use. 
+- **`metallb-config.yaml`**: Defines the IP address range for MetalLB to use.
+
+## Step 7: Integrate Azure Models with Ollama
+
+1. **Deploy LiteLLM Proxy**:
+   - Deploy the LiteLLM Proxy in the `openwebui-system` namespace to bridge Azure-hosted models with Ollama's local API.
+   - See `litellm-deployment.yaml` for the deployment configuration.
+
+2. **Configure LiteLLM Proxy**:
+   - Use a ConfigMap to store the configuration for the LiteLLM Proxy, specifying the Azure model details.
+   - See `litellm-configmap.yaml` for the configuration.
+
+3. **Expose LiteLLM Proxy**:
+   - Expose the LiteLLM Proxy using a LoadBalancer service with MetalLB to allow external access.
+   - See `litellm-service.yaml` for the service configuration.
+
+4. **Update Ollama WebUI**:
+   - Configure Ollama WebUI to use the LiteLLM Proxy as the API endpoint, using the external IP provided by MetalLB.
+
+5. **Apply Configurations**:
+   - Apply all configurations using `kubectl`:
+     ```bash
+     kubectl apply -f litellm-deployment.yaml
+     kubectl apply -f litellm-configmap.yaml
+     kubectl apply -f litellm-service.yaml
+     ```
+
+**LiteLLM Summary**:
+LiteLLM is a proxy tool that allows integration of Azure-hosted AI models with local applications like Ollama WebUI. It translates Azure AI API requests into a format compatible with OpenAI-style requests, enabling seamless interaction between Azure models and local interfaces. This setup leverages both cloud-based AI services and local deployment capabilities, providing flexibility and scalability in AI model management. 

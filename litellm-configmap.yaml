@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: litellm-config
+  namespace: openwebui-system
+data:
+  config.yaml: |
+    model_list:
+      - model_name: [model_name]
+        litellm_params:
+          model: azure/[model_name_on_azure]
+          api_base: "[API_ENDPOINT/Target_URI]"
+          api_key: "[API_Key]"
+          api_version: "[API_Version]" 
