@@ -64,6 +64,8 @@ These directories must exist on all nodes where the pods might be scheduled to e
   ```bash
   kubectl apply -f openwebui-pv.yaml
   kubectl apply -f openwebui-pvc.yaml
+  kubectl apply -f ollama-pv.yaml
+  kubectl apply -f ollama-pvc.yaml
   kubectl apply -f ollama-deployment.yaml
   kubectl apply -f openwebui-deployment.yaml
   kubectl apply -f ollama-service.yaml
