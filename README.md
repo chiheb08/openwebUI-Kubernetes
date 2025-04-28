@@ -6,7 +6,7 @@ This guide provides detailed instructions for deploying Open WebUI and Ollama on
 
 Below is the architecture diagram illustrating the communication flow between different components in the project:
 
-![Architecture Diagram](images/azure-ollama-openwebUI.jpg)
+![Architecture Diagram](/Users/chihebmhamdi/Desktop/openwebUI/images/azure-ollama-openwebUI.jpg)
 
 ## Minikube Setup
 
