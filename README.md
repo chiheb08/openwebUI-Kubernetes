@@ -2,6 +2,12 @@
 
 This guide provides detailed instructions for deploying Open WebUI and Ollama on a local Kubernetes cluster using Minikube. It includes steps for setting up storage, deploying applications, configuring services, and integrating Azure-hosted models.
 
+## Architecture Diagram
+
+Below is the architecture diagram illustrating the communication flow between different components in the project:
+
+![Architecture Diagram](images/azure-ollama-openwebUI.jpg)
+
 ## Minikube Setup
 
 1. **Start Minikube**:
