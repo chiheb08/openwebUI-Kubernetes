@@ -1,32 +1,35 @@
-## Step 1: Set Up Storage
+# Open WebUI and Ollama Deployment Guide
 
-1. **Create a Persistent Volume (PV) for Open WebUI:**
-   - Define a PV to store data persistently across pod restarts.
-   - See `openwebui-pv.yaml` for the configuration.
-   - Ensure the directory `/mnt/data` exists on each node in your cluster. This directory will be used by the Open WebUI PV to store data persistently. You can create it using:
+This guide provides detailed instructions for deploying Open WebUI and Ollama on a local Kubernetes cluster using Minikube. It includes steps for setting up storage, deploying applications, configuring services, and integrating Azure-hosted models.
+
+## Minikube Setup
+
+1. **Start Minikube**:
+   - Start Minikube with a specific driver (e.g., Docker):
      ```bash
-     sudo mkdir -p /mnt/data
-     sudo chmod 777 /mnt/data  # Adjust permissions as needed
+     minikube start --driver=docker
      ```
 
-2. **Create a Persistent Volume Claim (PVC) for Open WebUI:**
+2. **Enable Ingress**:
+   - Enable the Minikube ingress addon:
+     ```bash
+     minikube addons enable ingress
+     ```
+
+3. **Access Services**:
+   - Use `minikube service <service-name> --url` to get the URL for accessing your services locally.
+
+By following these steps, you can set up and run your applications on a local Kubernetes cluster using Minikube. This setup is ideal for development and testing purposes.
+
+## Step 1: Set Up Storage
+
+1. **Create a Persistent Volume Claim (PVC) for Open WebUI:**
    - Request storage for your pods using a PVC.
    - See `openwebui-pvc.yaml` for the configuration.
 
-3. **Create a Persistent Volume (PV) for Ollama:**
-   - Define a PV to store data persistently for Ollama.
-   - See `ollama-pv.yaml` for the configuration.
-   - Ensure the directory `/mnt/ollama-data` exists on each node in your cluster. This directory will be used by the Ollama PV to store data persistently. You can create it using:
-     ```bash
-     sudo mkdir -p /mnt/ollama-data
-     sudo chmod 777 /mnt/ollama-data  # Adjust permissions as needed
-     ```
-
-4. **Create a Persistent Volume Claim (PVC) for Ollama:**
+2. **Create a Persistent Volume Claim (PVC) for Ollama:**
    - Request storage for your pods using a PVC.
    - See `ollama-pvc.yaml` for the configuration.
-
-These directories must exist on all nodes where the pods might be scheduled to ensure data persistence and accessibility.
 
 ## Step 2: Deploy Ollama and Open WebUI
 
@@ -62,9 +65,7 @@ These directories must exist on all nodes where the pods might be scheduled to e
 
 - Apply the YAML files using `kubectl`:
   ```bash
-  kubectl apply -f openwebui-pv.yaml
   kubectl apply -f openwebui-pvc.yaml
-  kubectl apply -f ollama-pv.yaml
   kubectl apply -f ollama-pvc.yaml
   kubectl apply -f ollama-deployment.yaml
   kubectl apply -f openwebui-deployment.yaml
@@ -122,18 +123,4 @@ LiteLLM is a proxy tool that allows integration of Azure-hosted AI models with l
 **Communication Summary**:
 - **Internal Communication**: Pods communicate using Kubernetes services, which provide DNS resolution and load balancing. The Open WebUI pod interacts with the Ollama pod for model management and with the LiteLLM Proxy for accessing Azure-hosted models.
 - **External Communication**: The LiteLLM Proxy requires external access to communicate with Azure AI services, facilitated by a LoadBalancer service using MetalLB. This allows external clients to access the proxy.
-- **LoadBalancer Service**: Ensures scalability and reliability by distributing requests across LiteLLM Proxy replicas and providing an external IP for access.
-
-**Persistent Volume Setup**:
-- **Ollama PV**: Ensure the directory `/mnt/ollama-data` exists on each node in your cluster. This directory will be used by the Ollama PV to store data persistently. You can create it using:
-  ```bash
-  sudo mkdir -p /mnt/ollama-data
-  sudo chmod 777 /mnt/ollama-data  # Adjust permissions as needed
-  ```
-- **Open WebUI PV**: Ensure the directory `/mnt/data` exists on each node in your cluster. This directory will be used by the Open WebUI PV to store data persistently. You can create it using:
-  ```bash
-  sudo mkdir -p /mnt/data
-  sudo chmod 777 /mnt/data  # Adjust permissions as needed
-  ```
-
-These directories must exist on all nodes where the pods might be scheduled to ensure data persistence and accessibility. 
+- **LoadBalancer Service**: Ensures scalability and reliability by distributing requests across LiteLLM Proxy replicas and providing an external IP for access. 
