@@ -16,13 +16,7 @@ Below is the architecture diagram illustrating the communication flow between di
      minikube start --driver=docker
      ```
 
-2. **Enable Ingress**:
-   - Enable the Minikube ingress addon:
-     ```bash
-     minikube addons enable ingress
-     ```
-
-3. **Access Services**:
+2. **Access Services**:
    - Use `minikube service <service-name> --url` to get the URL for accessing your services locally.
 
 By following these steps, you can set up and run your applications on a local Kubernetes cluster using Minikube. This setup is ideal for development and testing purposes.
@@ -57,17 +51,7 @@ By following these steps, you can set up and run your applications on a local Ku
    - Expose Open WebUI using a Kubernetes Service.
    - See `openwebui-service.yaml` for the configuration.
 
-## Step 4: Set Up RBAC
-
-1. **Create a Role for Ollama:**
-   - Define a role for Ollama.
-   - See `ollama-role.yaml` for the configuration.
-
-2. **Create a RoleBinding for Ollama:**
-   - Bind the role to Ollama.
-   - See `ollama-rolebinding.yaml` for the configuration.
-
-## Step 5: Deploy the Applications
+## Step 4: Deploy the Applications
 
 - Apply the YAML files using `kubectl`:
   ```bash
@@ -77,10 +61,9 @@ By following these steps, you can set up and run your applications on a local Ku
   kubectl apply -f openwebui-deployment.yaml
   kubectl apply -f ollama-service.yaml
   kubectl apply -f openwebui-service.yaml
-  kubectl apply -f rbac.yaml
   ```
 
-## Step 6: Install MetalLB
+## Step 5: Install MetalLB
 
 1. **Deploy MetalLB**:
    - Install MetalLB using the following command:
@@ -98,7 +81,7 @@ By following these steps, you can set up and run your applications on a local Ku
 - **`metallb-native.yaml`**: Used to deploy MetalLB in your cluster.
 - **`metallb-config.yaml`**: Defines the IP address range for MetalLB to use.
 
-## Step 7: Integrate Azure Models with Ollama
+## Step 6: Integrate Azure Models with Ollama
 
 1. **Deploy LiteLLM Proxy**:
    - Deploy the LiteLLM Proxy in the `openwebui-system` namespace to bridge Azure-hosted models with Ollama's local API.
